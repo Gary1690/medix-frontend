@@ -1,4 +1,4 @@
-import React,{useState} from "react"
+import React,{useState,useEffect} from "react"
 import {Card,Button,Form,Modal} from "react-bootstrap"
 import CustomerTable from "./CustomerTable"
 import CustomerModal from "./CustomerModal"
@@ -21,6 +21,10 @@ const CustomerView = () => {
   }
   const display  = DummyData.filter(x=> (x.number.includes(filter) || x.email.toLowerCase().includes(filter)))
   
+  useEffect(()=>{
+
+  },[])
+
   return (
     <div>
       <Card>
