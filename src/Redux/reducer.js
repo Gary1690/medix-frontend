@@ -22,6 +22,8 @@ const reducer = (prevState=initialState,action)=>{
   switch(action.type){
     case"LOGIN": 
       return {...prevState, user:action.payload.user}
+    case "FETCH_CUSTOMERS":
+      return {...prevState, customers:action.payload.customers}
     default:
       return prevState
   }

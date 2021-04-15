@@ -1,5 +1,6 @@
 const HOST = "http://localhost:3000/";
 const AUTHENTICATE = `${HOST}authenticate`;
+const CUSTOMERS= `${HOST}customers`;
 
 const authenticateAction = (userInfo,history) => dispatch =>{
   fetch(AUTHENTICATE,{
@@ -22,6 +23,23 @@ const authenticateAction = (userInfo,history) => dispatch =>{
   })
 }
 
+const fetchCustomersAction = ( ) => dispatch =>{
+  fetch(CUSTOMERS,{
+    method:"GET",
+    headers:{
+      "Content-Type":"application/json",
+      "Accept":"application/json",
+      "Authorization":localStorage.getItem("token")
+    }
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    console.log(data)
+    dispatch({type:"FETCH_CUSTOMERS",payload:{customers:data}})
+  })
+}
+
 export {
-  authenticateAction
+  authenticateAction,
+  fetchCustomersAction
 }

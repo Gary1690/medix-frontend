@@ -2,9 +2,11 @@ import React,{useState,useEffect} from "react"
 import {Card,Button,Form,Modal} from "react-bootstrap"
 import CustomerTable from "./CustomerTable"
 import CustomerModal from "./CustomerModal"
+import {connect} from "react-redux"
+import {fetchCustomersAction} from "../../Redux/actionCreator"
 
-
-const CustomerView = () => {
+const CustomerView = (props) => {
+  console.log(props)
   const [filter, setFilter] = useState("");
   const [customer, setCustomer] = useState({});
   const [show, setShow] = useState(false);
@@ -19,10 +21,10 @@ const CustomerView = () => {
     setCustomer(customer)
     handleShow()
   }
-  const display  = DummyData.filter(x=> (x.number.includes(filter) || x.email.toLowerCase().includes(filter)))
+  const display  = props.customers.filter(x=> (x.number.includes(filter) || x.email.toLowerCase().includes(filter)))
   
   useEffect(()=>{
-
+    props.fetchCustomers()
   },[])
 
   return (
@@ -32,7 +34,7 @@ const CustomerView = () => {
           <div className="d-flex justify-content-between">
             <Form>
               <Form.Group controlId="formBasicEmail">
-                <Form.Control type="text" value={filter} onChange={(e)=>setFilter(e.target.value)} placeholder=" filter by phone or email" />
+                <Form.Control type="text" value={filter} onChange={(e)=>setFilter(e.target.value.toLowerCase())} placeholder=" filter by phone or email" />
               </Form.Group>
             </Form>
             <Button variant="primary" className="mb-2" onClick={newCustomer}>
@@ -50,19 +52,16 @@ const CustomerView = () => {
   )
 }
 
-const DummyData = [
-  {
-    name: "John",
-    lastname: "Allen",
-    email: "john.t.allen@gmail.com",
-    number: "999-999-9999",
-  },
-  {
-    name: "Jorge",
-    lastname: "Del Rosario",
-    email: "jorge.k.delrosario@gmail.com",
-    number: "999-999-1111",
-  }
-]
 
-export default CustomerView
+const msp = state => {
+  return{
+    customers: state.customers
+  }
+}
+
+const mdp = dispatch => {
+ return{
+   fetchCustomers:()=>dispatch(fetchCustomersAction())
+ }
+}
+export default connect(msp,mdp)(CustomerView)
