@@ -6,7 +6,6 @@ import {connect} from "react-redux"
 import {fetchCustomersAction} from "../../Redux/actionCreator"
 
 const CustomerView = (props) => {
-  console.log(props)
   const [filter, setFilter] = useState("");
   const [customer, setCustomer] = useState({});
   const [show, setShow] = useState(false);
@@ -61,7 +60,8 @@ const msp = state => {
 
 const mdp = dispatch => {
  return{
-   fetchCustomers:()=>dispatch(fetchCustomersAction())
+   fetchCustomers:()=>dispatch(fetchCustomersAction()),
  }
 }
+
 export default connect(msp,mdp)(CustomerView)

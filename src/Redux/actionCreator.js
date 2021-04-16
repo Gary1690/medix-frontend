@@ -34,12 +34,23 @@ const fetchCustomersAction = ( ) => dispatch =>{
   })
   .then(r=>r.json())
   .then(data=>{
-    console.log(data)
     dispatch({type:"FETCH_CUSTOMERS",payload:{customers:data}})
   })
 }
 
+const deleteCustomerAction = (id) => dispatch =>{
+  fetch(`${CUSTOMERS}/${id}`,{
+    method:"DELETE",
+    headers:{
+      "Content-Type":"application/json",
+      "Accept":"application/json",
+      "Authorization":localStorage.getItem("token")
+    }
+  }).then(r => r.json())
+  .then(user => dispatch({type:"DELETE_CUSTOMER",payload:{id:user.id}}))
+}
 export {
   authenticateAction,
-  fetchCustomersAction
+  fetchCustomersAction,
+  deleteCustomerAction 
 }

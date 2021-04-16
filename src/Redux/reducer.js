@@ -24,6 +24,9 @@ const reducer = (prevState=initialState,action)=>{
       return {...prevState, user:action.payload.user}
     case "FETCH_CUSTOMERS":
       return {...prevState, customers:action.payload.customers}
+    case "DELETE_CUSTOMER":
+      const newCusties = prevState.customers.filter(x => x.id != action.payload.id)
+      return {...prevState, customers:newCusties}
     default:
       return prevState
   }
